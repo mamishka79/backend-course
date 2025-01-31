@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>SUBJECTS LIST</title>
+    </head>
+    <body>
+        <h1>SUBJECT LIST</h1>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        TITLE
+                    </th>
+                    <th>
+                        AUTHOR
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for subject in subjects %}
+                <tr>
+                    <td>{{ subject.id }}</td>
+                    <td>{{ subject.title }}</td>
+                    <td>{{ subject.author }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>

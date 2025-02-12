@@ -1,0 +1,12 @@
+<h1>Todos List</h1>
+<a href="{% url 'todo_create' %}">Create new Todo</a>
+<ul>
+    {% for todo in todos %}
+        <li>
+            <a href="{% url 'todo_detail' todo.id %}">{{ todo.title }}</a> - 
+            <a href="{% url 'todo_delete' todo.id %}">Delete</a>
+        </li>
+    {% endfor %}
+</ul>
+
+<link rel="stylesheet" type="text/css" href="{% static 'todos/style.css' %}">

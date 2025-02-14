@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Создать задачу</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'todos/style.css' %}">
+</head>
+<body>
+    <h1>Создать новую задачу</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Создать</button>
+    </form>
+    <a href="{% url 'todos_list' %}">Отмена</a>
+</body>
+</html>

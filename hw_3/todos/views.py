@@ -2,13 +2,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Todo
 from .forms import TodoForm
 
-def get_todos(request):
+def get_todos_list(request):
     todos = Todo.objects.all()
-    return render(request, 'todos/list.html', {'todos': todos})
+    return render(request, 'todos/todos_list.html', {'todos': todos})
 
 def get_todo(request, id):
     todo = get_object_or_404(Todo, id=id)
-    return render(request, 'todos/detail.html', {'todo': todo})
+    return render(request, 'todos/todo_detail.html', {'todo': todo})
 
 def create_todo(request):
     if request.method == 'POST':
@@ -18,7 +18,7 @@ def create_todo(request):
             return redirect('todos_list')
     else:
         form = TodoForm()
-    return render(request, 'todos/create.html', {'form': form})
+    return render(request, 'todos/todo_form.html', {'form': form})
 
 def delete_todo(request, id):
     todo = get_object_or_404(Todo, id=id)

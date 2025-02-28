@@ -1,0 +1,50 @@
+{% extends 'base.html' %} {% block head %}
+<title>Edit {{ todo.title }}</title>
+<style>
+  .text-danger {
+    color: red;
+  }
+</style>
+{% endblock %}
+{% block content %}
+{% include 'header.html' %}
+<div class="container">
+  {% if error|length > 0 %}
+  <div class="row">
+    <div class="col-8 offset-2">
+      <p class="text-danger">{{error}}</p>
+    </div>
+  </div>
+  {% endif %}
+  <div class="row">
+    <div class="col-8 offset-2">
+      <form action="{% url 'edit_todo' pk=todo.id %}" method="POST" class="form">
+        {% csrf_token %}
+        {% for field in form %}
+          {% if field.title != "todo_list_id" %}
+          <div class="mb-3">
+            <label for="{{field.auto_id}}" class="form-label"> {{field.label}} </label>
+            <div>
+              {{ field }}
+              <div class="text-danger">{{ field.errors }}</div>
+            </div>
+          </div>
+        {% endif %}
+        {% endfor %}
+        <div class="mb-2">
+          <label for="todo_list_id" class="form-label">Todo List</label>
+          <select class="form-select" aria-label="TodoList" title="todo_list_id" id="todo_list">
+            {% for todo_list in todo_lists %}
+              <option value="{{ todo_list.id }}">{{ todo_list.title }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="w-100 d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary w-100">Edit Todo</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

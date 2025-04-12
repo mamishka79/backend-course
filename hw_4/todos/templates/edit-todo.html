@@ -18,10 +18,11 @@
   {% endif %}
   <div class="row">
     <div class="col-8 offset-2">
+      {{ form.errors }}
       <form action="{% url 'edit_todo' pk=todo.id %}" method="POST" class="form">
         {% csrf_token %}
         {% for field in form %}
-          {% if field.title != "todo_list_id" %}
+          {% if field.name != "todo_list_id" %}
           <div class="mb-3">
             <label for="{{field.auto_id}}" class="form-label"> {{field.label}} </label>
             <div>
@@ -33,7 +34,7 @@
         {% endfor %}
         <div class="mb-2">
           <label for="todo_list_id" class="form-label">Todo List</label>
-          <select class="form-select" aria-label="TodoList" title="todo_list_id" id="todo_list">
+          <select class="form-select" aria-label="TodoList" name="todo_list_id" id="todo_list">
             {% for todo_list in todo_lists %}
               <option value="{{ todo_list.id }}">{{ todo_list.title }}</option>
             {% endfor %}

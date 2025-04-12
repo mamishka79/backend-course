@@ -1,0 +1,79 @@
+{% extends 'base.html' %} {% block head %}
+<title>{{ todo_list.title }} todos</title>
+<style>
+  .text-danger {
+    color: red;
+  }
+</style>
+{% endblock %} {% block content %} {% include 'header.html' %}
+<div class="container">
+  <div class="row">
+    <div class="col-8 offset-2">
+      <form action="{% url 'todo_list_todo_list' pk=todo_list.id %}" method="POST" class="form">
+        <h1>Create todo for {{ todo_list.title }}</h1>
+        {% csrf_token %} {% for field in form %}
+        <div class="mb-3">
+          <label class="form-label"> {{field.label}} </label>
+          <div>
+            {{ field }}
+            <div class="text-danger">{{ field.errors }}</div>
+          </div>
+        </div>
+        {% endfor %}
+        <div class="w-100 d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary">Create Todo</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-8 offset-2">
+      <h1>{{ todo_list.title }}</h1>
+    </div>
+  </div>
+
+  {% if error|length > 0 %}
+  <div class="row">
+    <div class="col-8 offset-2">
+      <p class="text-danger">{{error}}</p>
+    </div>
+  </div>
+  {% endif %}
+  <div class="row">
+    <div class="col-8 offset-2">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>TITLE</th>
+            <th>DESCRIPTION</th>
+            <th>DUE DATE</th>
+            <th>STATUS</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for todo in todos %}
+          <tr>
+            <td>{{ todo.id }}</td>
+            <td>{{ todo.title }}</td>
+            <td>{{ todo.description }}</td>
+            <td>{{ todo.due_date }}</td>
+            <td>{{ todo.status }}</td>
+            <td>
+              <a href="{% url 'edit_todo' pk=todo.id %}">
+                <button class="btn btn-primary">Edit</button>
+              </a>
+              <a href="{% url 'delete_todo' pk=todo.id %}">
+                <button class="btn btn-danger">Delete</button>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

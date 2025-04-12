@@ -3,7 +3,7 @@ from .models import Todo, TodoList
 from .forms import StudentCreationForm, TodoListForm, EditTodoForm
 
 def get_index_page(request):
-    todos = Todo.objects.all()
+    todos = TodoList.objects.all()
     form = StudentCreationForm()
     return render(request, 'index2.html', {'todos': todos, 'form': form})
 
@@ -46,8 +46,10 @@ def delete_todo_list(request, pk):
     return redirect(to='todo_lists_list_page')
 
 def get_todo_list_todos(request, pk):
+    print('okokokok')
     if request.method == 'GET':
         todo_list = TodoList.objects.get(id=pk)
+        print(todo_list)
         todos = Todo.objects.filter(todo_list_id=todo_list.id)
         form = StudentCreationForm()
         return render(request, 'todo_list-todos.html', {'todo_list': todo_list, 'todos': todos, 'form': form})
@@ -120,4 +122,4 @@ def edit_todo(request, pk):
             todo.save()
             return redirect(to='todo_list_todo_list', pk=form.data.get('todo_list_id'))
         else:
-            return render(request, 'edit-product.html', {'form': form, 'todo': todo, 'error': 'Something went wrong'})
+            return render(request, 'edit-todo.html', {'form': form, 'todo': todo, 'error': 'Something went wrong'})
